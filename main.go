@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"prakerja/config"
 	"prakerja/controller"
 
@@ -11,11 +10,6 @@ import (
 func main() {
 	// Create HTTP server
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]interface{}{
-			"hello": "world",
-		})
-	})
 
 	// Connect To Database
 	config.DatabaseInit()

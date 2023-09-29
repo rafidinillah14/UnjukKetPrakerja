@@ -83,6 +83,38 @@ func GetBook(c echo.Context) error {
 
 	var books []*model.Book
 
+	if id == "all" {
+		if res := db.Find(&books); res.Error != nil {
+			data := map[string]interface{}{
+				"message": res.Error.Error(),
+			}
+
+			return c.JSON(http.StatusNotFound, data)
+		}
+	} else {
+		if res := db.Find(&books, id); res.Error != nil {
+			data := map[string]interface{}{
+				"message": res.Error.Error(),
+			}
+
+			return c.JSON(http.StatusNotFound, data)
+		}
+	}
+
+	response := map[string]interface{}{
+		"data": books,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
+}
+
+/*func GetBook(c echo.Context) error {
+	id := c.Param("id")
+	db := config.DB()
+
+	var books []*model.Book
+
 	if res := db.Find(&books, id); res.Error != nil {
 		data := map[string]interface{}{
 			"message": res.Error.Error(),
@@ -116,7 +148,7 @@ func GetBookAll(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response)
 
-}
+}*/
 
 func DeleteBook(c echo.Context) error {
 	id := c.Param("id")

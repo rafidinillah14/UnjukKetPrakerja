@@ -31,7 +31,6 @@ func main() {
 	bookRoute := e.Group("/book")
 	bookRoute.POST("/", controller.CreateBook)
 	bookRoute.GET("/:id", controller.GetBook)
-	bookRoute.GET("/", controller.GetBookAll)
 	bookRoute.PUT("/:id", controller.UpdateBook)
 	bookRoute.DELETE("/:id", controller.DeleteBook)
 

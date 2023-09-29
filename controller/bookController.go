@@ -98,6 +98,26 @@ func GetBook(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+func GetBookAll(c echo.Context) error {
+	var books []*model.Book
+	db := config.DB()
+
+	if res := db.Find(&books); res.Error != nil {
+		data := map[string]interface{}{
+			"message": res.Error.Error(),
+		}
+
+		return c.JSON(http.StatusOK, data)
+	}
+
+	response := map[string]interface{}{
+		"data": books,
+	}
+
+	return c.JSON(http.StatusOK, response)
+
+}
+
 func DeleteBook(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()
